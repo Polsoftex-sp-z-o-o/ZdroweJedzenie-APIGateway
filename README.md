@@ -1,1 +1,1 @@
-# ZdroweJedzenia-APIGateway
+# ZdroweJedzenie-APIGateway
