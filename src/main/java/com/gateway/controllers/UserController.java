@@ -1,6 +1,5 @@
 package com.gateway.controllers;
 
-import java.nio.file.AccessDeniedException;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-//import es.softtek.jwtDemo.dto.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -25,10 +23,13 @@ public class UserController {
     @Autowired
     private AuthenticationProvider _authenticationProvider;
 
-    @PostMapping("user")
-    public LoginSucceedMessage login(@RequestParam("user") String username, @RequestParam("password") String pwd) throws InvalidCredentialsException {
+    @PostMapping("/login")
+    public LoginSucceedMessage login(
+            @RequestParam("username") String username
+            , @RequestParam("password") String password)
+                throws InvalidCredentialsException {
 
-        AuthenticatedUser user = _authenticationProvider.Authenticate(username, pwd);
+        AuthenticatedUser user = _authenticationProvider.Authenticate(username, password);
         String token = getJWTToken(user);
         return new LoginSucceedMessage(user, token);
     }
