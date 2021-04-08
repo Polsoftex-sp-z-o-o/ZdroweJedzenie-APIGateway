@@ -4,8 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class MockAuthenticationProvider implements AuthenticationProvider{
@@ -15,13 +15,13 @@ public class MockAuthenticationProvider implements AuthenticationProvider{
         {
             List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                     .commaSeparatedStringToAuthorityList("ROLE_USER,ROLE_ADMIN");
-            return new AuthenticatedUser(username, grantedAuthorities);
+            return new AuthenticatedUser(UUID.randomUUID(), username, grantedAuthorities);
         }
         else if(username.equals("user") && password.equals("user"))
         {
             List<GrantedAuthority> grantedAuthorities = AuthorityUtils
                     .commaSeparatedStringToAuthorityList("ROLE_USER");
-            return new AuthenticatedUser(username, grantedAuthorities);
+            return new AuthenticatedUser(UUID.randomUUID(), username, grantedAuthorities);
         }
         else
         {

@@ -35,13 +35,11 @@ public class UserController {
 
     private String getJWTToken(AuthenticatedUser user) {
         String secretKey = SecurityConfiguration.JwtEncryptionKey;
-        //List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-        //        .commaSeparatedStringToAuthorityList("ROLE_USER");
 
         String token = Jwts
                 .builder()
                 .setId("zdrowe-jedzenie-jwt")
-                .setSubject(user.getName())
+                .setSubject(user.getId().toString())
                 .claim("authorities",
                         user.getGrantedAuthorities().stream()
                                 .map(GrantedAuthority::getAuthority)

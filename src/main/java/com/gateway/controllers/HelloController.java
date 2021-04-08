@@ -5,6 +5,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 @RestController()
 public class HelloController {
 
@@ -24,5 +26,13 @@ public class HelloController {
     public String greetAdmin() {
         return "Hello admin!";
     }
+
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @RequestMapping("/greet/name")
+    public String greetName(Principal principal)
+    {
+        return "hello" + principal.getName();
+    }
+
 
 }
