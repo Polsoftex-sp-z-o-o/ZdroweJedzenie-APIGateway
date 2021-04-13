@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: zdrowejedzenie-gateway
+  name: zdrowejedzenie-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zdrowejedzenie-gateway
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: zdrowejedzenie-gateway
+    spec:
+      containers:
+        - image: polsoftex.azurecr.io/zdrowejedzenie-gateway:latest
+          name: zdrowejedzenie-gateway
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: zdrowejedzenie-gateway
+  name: zdrowejedzenie-gateway
+spec:
+  ports:
+    - name: 8080-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: zdrowejedzenie-gateway
+  type: ClusterIP

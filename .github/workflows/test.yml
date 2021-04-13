@@ -9,4 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: Polsoftex-sp-z-o-o/Actions/test@main
+      - run: |
+          chmod +x ./gradlew
+          ./gradlew test
