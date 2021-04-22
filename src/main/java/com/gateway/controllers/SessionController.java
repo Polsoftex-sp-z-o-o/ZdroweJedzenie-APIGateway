@@ -1,5 +1,6 @@
 package com.gateway.controllers;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
-public class UserController {
+public class SessionController {
 
     @Autowired
     private AuthenticationProvider _authenticationProvider;
@@ -27,7 +28,7 @@ public class UserController {
     public LoginSucceedMessage login(
             @RequestParam("username") String username
             , @RequestParam("password") String password)
-                throws InvalidCredentialsException {
+            throws InvalidCredentialsException, IOException {
 
         AuthenticatedUser user = _authenticationProvider.Authenticate(username, password);
         String token = getJWTToken(user);
