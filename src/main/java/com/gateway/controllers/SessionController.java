@@ -19,7 +19,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
-public class UserController {
+public class SessionController {
 
     @Autowired
     private AuthenticationProvider _authenticationProvider;
