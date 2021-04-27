@@ -18,6 +18,7 @@ public abstract class GatewayController {
         final boolean hasBody = (method.equals("POST"));
 
         try {
+            //todo decide whether query string should have trailing slash
             final URL url = new URL(_innerServiceUri
                     + req.getRequestURI()
                     + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
@@ -59,6 +60,8 @@ public abstract class GatewayController {
                 if (read <= 0) break;
                 resp.getOutputStream().write(buffer, 0, read);
             }
+
+            resp.setContentType(conn.getContentType());
         } catch (Exception e) {
             e.printStackTrace();
         }
