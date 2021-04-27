@@ -1,17 +1,19 @@
 package com.gateway.security;
 
+import java.util.UUID;
+
 public class ServiceUser {
-    private int id;
+    private UUID id;
     private String username;
     private String password;
     private String address;
     private boolean elevation;
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
