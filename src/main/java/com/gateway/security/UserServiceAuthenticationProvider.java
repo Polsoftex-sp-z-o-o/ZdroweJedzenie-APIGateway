@@ -39,7 +39,7 @@ public class UserServiceAuthenticationProvider implements AuthenticationProvider
 
     private ServiceUser LoadUserByUsername(String username) throws InvalidCredentialsException, IOException {
         try {
-            URL getUserByUserNameUrl = new URL(userServiceBaseUrl + GET_USER_BY_USERNAME_PATH + username);
+            URL getUserByUserNameUrl = new URL(userServiceBaseUrl + GET_USER_BY_USERNAME_PATH + username + "/");
             HttpURLConnection connection = (HttpURLConnection) getUserByUserNameUrl.openConnection();
 
             connection.setRequestMethod("GET");
