@@ -1,5 +1,7 @@
 package com.gateway.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.HttpURLConnection;
@@ -9,6 +11,9 @@ import java.util.Enumeration;
 
 public abstract class GatewayController {
     private final URI _innerServiceUri;
+
+    @Value("${add-trailing-slash-when-forwarding}")
+    private boolean _addTrailingSlashes;
 
     protected GatewayController(URI innerServiceUri) {
         _innerServiceUri = innerServiceUri;
@@ -23,7 +28,7 @@ public abstract class GatewayController {
                     + req.getRequestURI()
                     + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
 
-            if(!path.endsWith("/"))
+            if(!path.endsWith("/") && _addTrailingSlashes)
                 path += "/";
 
             final URL url = new URL(path);
