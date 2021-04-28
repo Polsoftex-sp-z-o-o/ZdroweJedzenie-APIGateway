@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 import com.gateway.SecurityConfiguration;
-import com.gateway.dto.LoginSucceedMessage;
 import com.gateway.security.AuthenticatedUser;
 import com.gateway.security.AuthenticationProvider;
 import com.gateway.exceptions.InvalidCredentialsException;
@@ -25,14 +24,13 @@ public class SessionController {
     private AuthenticationProvider _authenticationProvider;
 
     @PostMapping("/login")
-    public LoginSucceedMessage login(
+    public String login(
             @RequestParam("email-address") String emailAddress
             , @RequestParam("password") String password)
             throws InvalidCredentialsException, IOException {
 
         AuthenticatedUser user = _authenticationProvider.Authenticate(emailAddress, password);
-        String token = getJWTToken(user);
-        return new LoginSucceedMessage(user, token);
+        return getJWTToken(user);
     }
 
     private String getJWTToken(AuthenticatedUser user) {
