@@ -1,11 +1,12 @@
 package com.gateway.security;
 
+import com.gateway.dto.ServiceUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class AuthenticatedUser {
     private final UUID id;
@@ -19,15 +20,11 @@ public class AuthenticatedUser {
     }
 
     public static AuthenticatedUser FromServiceUser(ServiceUser serviceUser){
-        //todo user ID not yet implemented!
-        UUID userId = UUID.randomUUID();
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        var authorities = serviceUser.getRoles().stream()
+                .map(su -> (GrantedAuthority) new SimpleGrantedAuthority(su.getName()))
+                .collect(Collectors.toList());
 
-        if(serviceUser.getElevation())
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
-        return new AuthenticatedUser(userId, serviceUser.getUsername(), authorities);
+        return new AuthenticatedUser(serviceUser.getId(), serviceUser.getEmail(), authorities);
     }
 
     public String getName() {

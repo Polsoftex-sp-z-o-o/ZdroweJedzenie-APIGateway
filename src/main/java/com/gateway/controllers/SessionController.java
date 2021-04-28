@@ -8,7 +8,7 @@ import com.gateway.SecurityConfiguration;
 import com.gateway.dto.LoginSucceedMessage;
 import com.gateway.security.AuthenticatedUser;
 import com.gateway.security.AuthenticationProvider;
-import com.gateway.security.InvalidCredentialsException;
+import com.gateway.exceptions.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;

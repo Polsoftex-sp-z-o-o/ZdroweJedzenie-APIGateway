@@ -32,7 +32,6 @@ public class UsersController extends GatewayController{
             method = {RequestMethod.PUT, RequestMethod.DELETE})
     @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
     public void HandleAccountEdit(Principal principal, HttpServletRequest req, HttpServletResponse resp, @PathVariable String userId) throws InsufficientAuthorityException {
-        //todo this will currently always throw - until user id is changed go uuid
         if(!principal.getName().equals(userId))
             throw new InsufficientAuthorityException();
 

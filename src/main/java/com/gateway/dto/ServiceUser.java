@@ -1,13 +1,16 @@
-package com.gateway.security;
+package com.gateway.dto;
 
+import com.gateway.dto.ServiceRole;
+
+import java.util.List;
 import java.util.UUID;
 
 public class ServiceUser {
     private UUID id;
-    private String username;
+    private String email;
     private String password;
     private String address;
-    private boolean elevation;
+    private List<ServiceRole> roles;
 
     public UUID getId() {
         return id;
@@ -15,14 +18,6 @@ public class ServiceUser {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -41,11 +36,19 @@ public class ServiceUser {
         this.address = address;
     }
 
-    public boolean getElevation() {
-        return elevation;
+    public String getEmail() {
+        return email;
     }
 
-    public void setElevation(boolean elevation) {
-        this.elevation = elevation;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<ServiceRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<ServiceRole> roles) {
+        this.roles = roles;
     }
 }
