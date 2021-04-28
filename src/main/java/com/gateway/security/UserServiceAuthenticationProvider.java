@@ -1,9 +1,8 @@
 package com.gateway.security;
 
+import com.gateway.dto.ServiceUser;
+import com.gateway.exceptions.InvalidCredentialsException;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
@@ -31,8 +29,8 @@ public class UserServiceAuthenticationProvider implements AuthenticationProvider
     }
 
     @Override
-    public AuthenticatedUser Authenticate(String username, String password) throws InvalidCredentialsException, IOException {
-        ServiceUser serviceUser =  LoadUserByUsername(username);
+    public AuthenticatedUser Authenticate(String emailAddress, String password) throws InvalidCredentialsException, IOException {
+        ServiceUser serviceUser =  LoadUserByUsername(emailAddress);
 
         if(!serviceUser.getPassword().equals(password))
             throw new InvalidCredentialsException();
