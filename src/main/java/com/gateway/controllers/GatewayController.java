@@ -19,9 +19,14 @@ public abstract class GatewayController {
 
         try {
             //todo decide whether query string should have trailing slash
-            final URL url = new URL(_innerServiceUri
+            String path = _innerServiceUri
                     + req.getRequestURI()
-                    + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+                    + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
+
+            if(!path.endsWith("/"))
+                path += "/";
+
+            final URL url = new URL(path);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(method);
 

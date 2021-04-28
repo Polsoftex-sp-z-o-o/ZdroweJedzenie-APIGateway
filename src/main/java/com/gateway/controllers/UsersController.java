@@ -21,14 +21,14 @@ public class UsersController extends GatewayController{
         super(new URI(productsServiceUrl));
     }
 
-    @PostMapping(value="/users/", consumes = "application/json", produces = "application/json")
+    @PostMapping(value="/users", consumes = "application/json", produces = "application/json")
     @ResponseBody
     public void HandleAccountCreation(HttpServletRequest req, HttpServletResponse resp){
         forwardRequest(req, resp);
     }
 
     @RequestMapping(
-            value = {"/users/{userId}/"},
+            value = {"/users/{userId}"},
             method = {RequestMethod.PUT, RequestMethod.DELETE})
     @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
     public void HandleAccountEdit(Principal principal, HttpServletRequest req, HttpServletResponse resp, @PathVariable String userId) throws InsufficientAuthorityException {
