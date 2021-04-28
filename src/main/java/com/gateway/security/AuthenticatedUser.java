@@ -10,13 +10,17 @@ import java.util.stream.Collectors;
 
 public class AuthenticatedUser {
     private final UUID id;
-    private final String name;
+    private final String email;
+    private final String firstName;
+    private final String lastName;
     private final List<GrantedAuthority> grantedAuthorities;
 
-    public AuthenticatedUser(UUID id, String name, List<GrantedAuthority> grantedAuthorities) {
+    public AuthenticatedUser(UUID id, String email, String firstName, String lastName, List<GrantedAuthority> grantedAuthorities) {
         this.id = id;
-        this.name = name;
+        this.email = email;
         this.grantedAuthorities = grantedAuthorities;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public static AuthenticatedUser FromServiceUser(ServiceUser serviceUser){
@@ -24,11 +28,11 @@ public class AuthenticatedUser {
                 .map(su -> (GrantedAuthority) new SimpleGrantedAuthority(su.getName()))
                 .collect(Collectors.toList());
 
-        return new AuthenticatedUser(serviceUser.getId(), serviceUser.getEmail(), authorities);
+        return new AuthenticatedUser(serviceUser.getId(), serviceUser.getEmail(), serviceUser.getFirstName(), serviceUser.getLastName(), authorities);
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
     public List<GrantedAuthority> getGrantedAuthorities() {
@@ -37,5 +41,13 @@ public class AuthenticatedUser {
 
     public UUID getId() {
         return id;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 }

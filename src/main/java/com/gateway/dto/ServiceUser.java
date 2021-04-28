@@ -10,7 +10,10 @@ public class ServiceUser {
     private String email;
     private String password;
     private String address;
+    private String firstName;
+    private String lastName;
     private List<ServiceRole> roles;
+
 
     public UUID getId() {
         return id;
@@ -50,5 +53,21 @@ public class ServiceUser {
 
     public void setRoles(List<ServiceRole> roles) {
         this.roles = roles;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

@@ -29,8 +29,8 @@ public class UserServiceAuthenticationProvider implements AuthenticationProvider
     }
 
     @Override
-    public AuthenticatedUser Authenticate(String username, String password) throws InvalidCredentialsException, IOException {
-        ServiceUser serviceUser =  LoadUserByUsername(username);
+    public AuthenticatedUser Authenticate(String emailAddress, String password) throws InvalidCredentialsException, IOException {
+        ServiceUser serviceUser =  LoadUserByUsername(emailAddress);
 
         if(!serviceUser.getPassword().equals(password))
             throw new InvalidCredentialsException();

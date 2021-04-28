@@ -26,11 +26,11 @@ public class SessionController {
 
     @PostMapping("/login")
     public LoginSucceedMessage login(
-            @RequestParam("username") String username
+            @RequestParam("email-address") String emailAddress
             , @RequestParam("password") String password)
             throws InvalidCredentialsException, IOException {
 
-        AuthenticatedUser user = _authenticationProvider.Authenticate(username, password);
+        AuthenticatedUser user = _authenticationProvider.Authenticate(emailAddress, password);
         String token = getJWTToken(user);
         return new LoginSucceedMessage(user, token);
     }
@@ -41,11 +41,14 @@ public class SessionController {
         String token = Jwts
                 .builder()
                 .setId("zdrowe-jedzenie-jwt")
-                .setSubject(user.getId().toString())
+                .setSubject(user.getEmail())
                 .claim("authorities",
                         user.getGrantedAuthorities().stream()
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
+                .claim("first-name", user.getFirstName())
+                .claim("last-name", user.getLastName())
+                .claim("user-id", user.getId())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 600000))
                 .signWith(SignatureAlgorithm.HS512,
