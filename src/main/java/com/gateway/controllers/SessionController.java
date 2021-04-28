@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 import com.gateway.SecurityConfiguration;
+import com.gateway.dto.LoginRequest;
 import com.gateway.security.AuthenticatedUser;
 import com.gateway.security.AuthenticationProvider;
 import com.gateway.exceptions.InvalidCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,13 +25,11 @@ public class SessionController {
     @Autowired
     private AuthenticationProvider _authenticationProvider;
 
-    @PostMapping("/login")
-    public String login(
-            @RequestParam("email") String email
-            , @RequestParam("password") String password)
+    @PostMapping(value = "/login", consumes = "application/json")
+    public String login(@RequestBody LoginRequest loginRequest)
             throws InvalidCredentialsException, IOException {
 
-        AuthenticatedUser user = _authenticationProvider.Authenticate(email, password);
+        AuthenticatedUser user = _authenticationProvider.Authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         return getJWTToken(user);
     }
 
