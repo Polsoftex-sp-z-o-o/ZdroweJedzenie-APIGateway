@@ -25,11 +25,11 @@ public class SessionController {
 
     @PostMapping("/login")
     public String login(
-            @RequestParam("email-address") String emailAddress
+            @RequestParam("email") String email
             , @RequestParam("password") String password)
             throws InvalidCredentialsException, IOException {
 
-        AuthenticatedUser user = _authenticationProvider.Authenticate(emailAddress, password);
+        AuthenticatedUser user = _authenticationProvider.Authenticate(email, password);
         return getJWTToken(user);
     }
 
