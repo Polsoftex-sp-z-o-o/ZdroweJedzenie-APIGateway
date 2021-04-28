@@ -22,6 +22,9 @@ public class UserServiceAuthenticationProvider implements AuthenticationProvider
     private static final String GET_USER_BY_USERNAME_PATH = "/users/find/";
     private final String userServiceBaseUrl;
 
+    @Value("${add-trailing-slash-when-forwarding}")
+    private boolean addTrailingSlash;
+
     public UserServiceAuthenticationProvider(
             @Value("${users.service.host}") String userServiceBaseUrl) {
         this.userServiceBaseUrl = userServiceBaseUrl;
@@ -39,7 +42,12 @@ public class UserServiceAuthenticationProvider implements AuthenticationProvider
 
     private ServiceUser LoadUserByUsername(String username) throws InvalidCredentialsException, IOException {
         try {
-            URL getUserByUserNameUrl = new URL(userServiceBaseUrl + GET_USER_BY_USERNAME_PATH + username + "/");
+            String path = userServiceBaseUrl + GET_USER_BY_USERNAME_PATH + username;
+
+            if(!path.endsWith("/") && addTrailingSlash)
+                path += "/";
+
+            URL getUserByUserNameUrl = new URL(path);
             HttpURLConnection connection = (HttpURLConnection) getUserByUserNameUrl.openConnection();
 
             connection.setRequestMethod("GET");
