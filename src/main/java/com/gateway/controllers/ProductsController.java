@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 public class ProductsController extends GatewayController {
 
     protected ProductsController(
-            @Value("${products.service.host}") String productsServiceUrl)
+            @Value("${service.address.products}") String productsServiceUrl)
                 throws URISyntaxException {
         super(new URI(productsServiceUrl));
     }

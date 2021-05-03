@@ -24,7 +24,7 @@ public class UserServiceAuthenticationProvider implements AuthenticationProvider
     private boolean addTrailingSlash;
 
     public UserServiceAuthenticationProvider(
-            @Value("${users.service.host}") String userServiceBaseUrl) {
+            @Value("${service.address.users}") String userServiceBaseUrl) {
         this.userServiceBaseUrl = userServiceBaseUrl;
     }
 

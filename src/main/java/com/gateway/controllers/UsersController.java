@@ -16,7 +16,7 @@ import java.security.Principal;
 @RestController
 public class UsersController extends GatewayController{
     protected UsersController(
-            @Value("${users.service.host}") String productsServiceUrl)
+            @Value("${service.address.users}") String productsServiceUrl)
             throws URISyntaxException {
         super(new URI(productsServiceUrl));
     }
