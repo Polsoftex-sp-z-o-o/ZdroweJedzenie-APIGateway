@@ -2,6 +2,7 @@ package com.gateway.security;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
@@ -54,10 +55,14 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private void setUpSpringAuthentication(Claims claims) {
         List<String> authorities = (List) claims.get("authorities");
+        UUID userId = UUID.fromString((String) claims.get("user-id"));
 
+        GatewayPrincipal principal = new GatewayPrincipal(userId);
 
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
-                authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+        GatewaySecurityToken auth = new GatewaySecurityToken(
+                principal
+                , authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+
         SecurityContextHolder.getContext().setAuthentication(auth);
 
     }
