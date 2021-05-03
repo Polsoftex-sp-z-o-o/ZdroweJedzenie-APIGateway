@@ -1,13 +1,19 @@
 package com.gateway.controllers;
 
+import com.gateway.exceptions.InsufficientAuthorityException;
+import com.gateway.security.GatewayPrincipal;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.naming.ServiceUnavailableException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.UUID;
 
 public abstract class GatewayController {
     private final URI _innerServiceUri;
@@ -18,19 +24,13 @@ public abstract class GatewayController {
     protected GatewayController(URI innerServiceUri) {
         _innerServiceUri = innerServiceUri;
     }
-    protected void forwardRequest(HttpServletRequest req, HttpServletResponse resp) {
+
+    protected void forwardRequest(HttpServletRequest req, HttpServletResponse resp) throws ServiceUnavailableException {
         final String method = req.getMethod();
         final boolean hasBody = (method.equals("POST"));
+        String path = formatPath(req);
 
         try {
-            //todo decide whether query string should have trailing slash
-            String path = _innerServiceUri
-                    + req.getRequestURI()
-                    + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
-
-            if(!path.endsWith("/") && _addTrailingSlashes)
-                path += "/";
-
             final URL url = new URL(path);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod(method);
@@ -72,8 +72,28 @@ public abstract class GatewayController {
             }
 
             resp.setContentType(conn.getContentType());
-        } catch (Exception e) {
+        }
+        catch(ConnectException e){
+            throw new ServiceUnavailableException(path);
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected void validateUserAction(GatewayPrincipal principal, UUID changedUserId) throws InsufficientAuthorityException {
+        if(!principal.getUserId().equals(changedUserId))
+            throw new InsufficientAuthorityException();
+    }
+
+    private String formatPath(HttpServletRequest req) {
+        String path = _innerServiceUri
+                + req.getRequestURI()
+                + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
+
+        if(!path.endsWith("/") && _addTrailingSlashes)
+            path += "/";
+
+        return path;
     }
 }
