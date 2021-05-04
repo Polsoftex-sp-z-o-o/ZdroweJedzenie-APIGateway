@@ -32,8 +32,8 @@ creates user and returns 200 or 405 in case of bad password validation
 user will have role USER by default (non elevated)
 
 ## PUT /users/b9b49f47-de10-4929-bb28-42cf9e04a06b
-ROLES: USER, ADMIN
-AUTH: REQUIRED
+ROLES: USER, ADMIN  
+AUTH: REQUIRED  
 
 ```json
 {
@@ -55,8 +55,8 @@ returns products list
 
 
 ## POST /products
-ROLES: ADMIN
-AUTH: REQUIRED
+ROLES: ADMIN  
+AUTH: REQUIRED  
 
 ```json
 {
@@ -68,15 +68,15 @@ AUTH: REQUIRED
 adds product to database
 
 ## GET /cart?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
-ROLES: USER 
+ROLES: USER  
 AUTH: REQUIRED  
 returns active user cart content, user id needs to be authenticated user - otherwise forbidden
 
 
 
 ## POST /cart?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
-ROLES: USER WITH ID
-AUTH: REQUIRED
+ROLES: USER WITH ID  
+AUTH: REQUIRED  
 
 ```json
 {
@@ -84,16 +84,16 @@ AUTH: REQUIRED
     "quantity": 3
 }
 ```
-adds product to cart 
+adds product to cart  
 returns cart content (like GET /cart)
 
 ## DELETE /cart?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
-ROLES: USER WITH ID
+ROLES: USER WITH ID  
 AUTH: REQUIRED  
 clears cart for user
 
 ## POST /order?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
-ROLES: USER WITH ID
+ROLES: USER WITH ID  
 AUTH: REQUIRED  
 creates order out of active user cart - returns 404 if cart doesnt exist
 
