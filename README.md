@@ -11,8 +11,24 @@ AUTH: NOT REQUIRED
       "password" : "pass"  
 }  
 ```
-returns 200 with JWT authentication token or 403 forbidden in case of invalid credentials
+returns 200 with JWT authentication token or 403 forbidden in case of invalid credentials  
 
+**TOKEN PAYLOAD**  
+```json
+{
+      "jti": "zdrowe-jedzenie-jwt",
+      "sub": "admin14@gmail.com",
+      "authorities": [
+            "ROLE_USER"
+            ],
+      "first-name": "Adam",
+      "last-name": "Admiński",
+      "user-id": "b9b49f47-de10-4929-bb28-42cf9e04a06b",
+      "iat": 1620084842,
+      "exp": 1620085442
+} 
+```  
+**TOKEN ENCRYPTION**: HS512  
 
 ## POST /users   
 ROLES: ANY  
