@@ -108,9 +108,17 @@ ROLES: USER WITH ID
 AUTH: REQUIRED  
 clears cart for user
 
-## POST /order?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
+## POST /payment?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
 ROLES: USER WITH ID  
 AUTH: REQUIRED  
+
+```json
+{
+    "number": "4485568736434905",
+    "expiration" : "02/26",
+    "code": "112"
+}
+```
 creates order out of active user cart - returns 404 if cart doesnt exist
 
 
