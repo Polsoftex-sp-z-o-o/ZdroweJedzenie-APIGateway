@@ -16,7 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.UUID;
-
+@CrossOrigin
 @RestController
 public class UsersController extends GatewayController{
     protected UsersController(

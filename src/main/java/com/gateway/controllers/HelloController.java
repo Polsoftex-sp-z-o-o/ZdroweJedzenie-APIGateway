@@ -2,11 +2,12 @@ package com.gateway.controllers;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-
+@CrossOrigin
 @RestController()
 public class HelloController {
 
