@@ -83,14 +83,14 @@ AUTH: REQUIRED
 ```
 adds product to database
 
-## GET /cart?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
+## GET /cart/?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
 ROLES: USER  
 AUTH: REQUIRED  
 returns active user cart content, user id needs to be authenticated user - otherwise forbidden
 
 
 
-## POST /cart?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
+## POST /cart/?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
 ROLES: USER WITH ID  
 AUTH: REQUIRED  
 
@@ -103,12 +103,12 @@ AUTH: REQUIRED
 adds product to cart  
 returns cart content (like GET /cart)
 
-## DELETE /cart?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
+## DELETE /cart/?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
 ROLES: USER WITH ID  
 AUTH: REQUIRED  
 clears cart for user
 
-## POST /payment?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
+## POST /payment/?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
 ROLES: USER WITH ID  
 AUTH: REQUIRED  
 
