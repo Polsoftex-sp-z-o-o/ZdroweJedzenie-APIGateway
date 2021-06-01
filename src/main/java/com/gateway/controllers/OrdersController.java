@@ -22,7 +22,7 @@ public class OrdersController extends GatewayController{
     }
 
     @RequestMapping(
-            value = {"/cart", "/orders"},
+            value = {"/cart", "/cart/**", "/orders", "/orders/**"},
             method = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE})
     @Secured("ROLE_USER")
     public void HandleUserCartOperations(
