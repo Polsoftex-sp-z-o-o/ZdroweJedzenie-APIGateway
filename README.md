@@ -69,6 +69,16 @@ ROLES: ANY
 AUTH: NOT REQUIRED  
 returns products list
 
+## GET /products/getAllCategories  
+ROLES: ANY  
+AUTH: NOT REQUIRED  
+returns all product categories
+
+## GET /products/ids?ids=77372d83-041a-43b6-933a-9d2df61a182c&ids=77372d83-041a-43b6-933a-9d2df61a182c  
+ROLES: ANY  
+AUTH: NOT REQUIRED  
+returns array of products of given id
+
 
 ## POST /products
 ROLES: ADMIN  
