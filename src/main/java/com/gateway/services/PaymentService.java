@@ -3,6 +3,7 @@ package com.gateway.services;
 import com.gateway.dto.Card;
 import com.gateway.dto.OrderedProduct;
 import com.gateway.dto.Payment;
+import com.gateway.dto.ProductPrice;
 import com.gateway.exceptions.CartNotFoundException;
 import com.gateway.helpers.JsonRequestHelper;
 import com.google.gson.Gson;
@@ -11,14 +12,14 @@ import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class PaymentService {
@@ -38,7 +39,11 @@ public class PaymentService {
 
     public void makePayment(Card paymentData, UUID userId) throws IOException, CartNotFoundException {
         OrderedProduct[] products = loadCartContent(userId);
-        double price = calculateCartPrice(products);
+        ProductPrice[] prices = loadProductPrices(Arrays.asList(products));
+
+        double price = Arrays.stream(prices)
+                .map(ProductPrice::getPrice)
+                .reduce(0d, Double::sum);
 
         makePayment(new Payment(paymentData, price));
         confirmOrder(userId);
@@ -74,18 +79,23 @@ public class PaymentService {
         con.getInputStream();
     }
 
-    private double calculateCartPrice(OrderedProduct[] cart){
-        return Arrays.stream(cart)
-                .map(product -> product.getQuantity() * loadProductPrice(product.getProductId()))
-                .reduce(0d, Double::sum);
-    }
+    private ProductPrice[] loadProductPrices(List<OrderedProduct> products) throws IOException {
+            StringBuilder path = new StringBuilder(productsServiceBaseUrl + "/products/ids?");
 
-    private double loadProductPrice(UUID productId){
-        //String path = productsServiceBaseUrl + "/products/" + productId + trailingElement();
-        //String jproduct = JsonRequestHelper.Get(new URL(path));
+            for(OrderedProduct product : products){
+                for (int i = 0; i < product.getQuantity(); i++) {
+                    path.append("ids=");
+                    path.append(product.getProductId().toString());
+                    path.append("&");
+                }
+            }
 
-        //todo implement this!!!
-        return 10;
+            path.append(trailingElement());
+
+            URL loadCartUrl = new URL(path.toString());
+            String jsonString = JsonRequestHelper.Get(loadCartUrl);
+
+            return new Gson().fromJson(jsonString, ProductPrice[].class);
     }
 
     private OrderedProduct[] loadCartContent(UUID userId) throws IOException, CartNotFoundException {
