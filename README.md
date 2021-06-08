@@ -93,6 +93,28 @@ AUTH: REQUIRED
 ```
 adds product to database
 
+## PUT /products/1f0ccf58-a390-4aab-af22-439e354d7f50
+ROLES: ADMIN  
+AUTH: REQUIRED  
+
+```json
+{
+      "name": "BONDUELLE Gotowana na parze Cieciorka",
+      "description": "Cieciorka gotowana na parze to mistrzowskie polaczenie chrupkosci, delikatnosci, pieknej zlotej barwy i skladników odzywczych.",
+      "category": "Przetwory owocowe i warzywne",
+      "quantity": 1000,
+      "price": 5.49
+}
+```
+edits product in database
+
+
+## DELETE /products/1f0ccf58-a390-4aab-af22-439e354d7f50
+ROLES: ADMIN  
+AUTH: REQUIRED  
+
+removes product from database
+
 ## GET /cart/?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
 ROLES: USER  
 AUTH: REQUIRED  
