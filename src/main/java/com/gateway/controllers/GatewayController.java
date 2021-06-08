@@ -27,7 +27,7 @@ public abstract class GatewayController {
 
     protected void forwardRequest(HttpServletRequest req, HttpServletResponse resp) throws ServiceUnavailableException {
         final String method = req.getMethod();
-        final boolean hasBody = (method.equals("POST"));
+        final boolean hasBody = (method.equals("POST") || method.equals("PUT"));
         String path = formatPath(req);
 
         try {
