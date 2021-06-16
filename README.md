@@ -121,6 +121,31 @@ AUTH: REQUIRED
 returns active user cart content, user id needs to be authenticated user - otherwise forbidden
 
 
+## GET /images
+ROLES: ANY  
+AUTH: NOT REQUIRED  
+returns all stored images - encoded via base64
+
+
+## GET /images/1f0ccf58-a390-4aab-af22-439e354d7f50
+ROLES: ANY  
+AUTH: NOT REQUIRED  
+returns image of product with specified id - encoded via base64
+
+
+## POST /images
+ROLES: ADMIN  
+AUTH: REQUIRED  
+
+```json
+{
+    "id":"1f0ccf58-a390-4aab-af22-439e354d7f50",
+    "image":"{STRING BASE64}"
+}
+```
+uploads image for product with specified id - image should be encoded via base64
+
+
 
 ## POST /cart/?userid=c49f0df2-57f3-4ce6-93de-335898afc3ed
 ROLES: USER WITH ID  
