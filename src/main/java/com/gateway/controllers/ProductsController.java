@@ -20,16 +20,27 @@ public class ProductsController extends GatewayController {
         super(new URI(productsServiceUrl));
     }
 
-    @GetMapping(value = {"/products", "/products/**"})
+    @GetMapping(value = {"/products", "/products/{id}"})
     public void HandlePublicRequests(HttpServletRequest req, HttpServletResponse resp) throws ServiceUnavailableException {
         forwardRequest(req, resp);
     }
 
     @RequestMapping(
-            value = {"/products", "/products/**"},
+            value = {"/products", "/products/{id}"},
             method = {RequestMethod.POST,RequestMethod.PUT, RequestMethod.DELETE})
     @Secured("ROLE_ADMIN")
     public void HandleAdminRequests(HttpServletRequest req, HttpServletResponse resp) throws ServiceUnavailableException {
+        forwardRequest(req, resp);
+    }
+
+    @GetMapping(value = {"/images", "/images/{id}"})
+    public void HandleRequestImage(HttpServletRequest req, HttpServletResponse resp) throws ServiceUnavailableException {
+        forwardRequest(req, resp);
+    }
+
+    @PostMapping(value = {"/images"})
+    @Secured("ROLE_ADMIN")
+    public void HandleUploadImage(HttpServletRequest req, HttpServletResponse resp) throws ServiceUnavailableException {
         forwardRequest(req, resp);
     }
 }
