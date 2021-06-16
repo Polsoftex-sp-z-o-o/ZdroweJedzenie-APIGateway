@@ -33,7 +33,7 @@ public class UsersController extends GatewayController{
 
     @RequestMapping(
             value = {"/users/{userId}"},
-            method = {RequestMethod.PUT, RequestMethod.DELETE})
+            method = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
     @Secured(value = {"ROLE_USER", "ROLE_ADMIN"})
     public void HandleAccountEdit(
             @AuthenticationPrincipal GatewayPrincipal principal
